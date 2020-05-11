@@ -11,10 +11,10 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
-      }
+        content: process.env.npm_package_description || '',
+      },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
   /*
    ** Customize the progress-bar color
@@ -27,7 +27,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['~/plugins/vant'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -35,7 +35,7 @@ export default {
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
     // Doc: https://github.com/nuxt-community/stylelint-module
-    '@nuxtjs/stylelint-module'
+    '@nuxtjs/stylelint-module',
   ],
   /*
    ** Nuxt.js modules
@@ -48,6 +48,26 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
-  }
+    extend(config, ctx) {},
+    postcss: {
+      plugins: {
+        pxtoviewport: {
+          viewportWidth: 375,
+        },
+      },
+    },
+    babel: {
+      plugins: [
+        [
+          'import',
+          {
+            libraryName: 'vant',
+            // 目前在 nuxt 中无法按需引入样式，因此采用手动引入的方式
+            style: false,
+          },
+          'vant',
+        ],
+      ],
+    },
+  },
 }
